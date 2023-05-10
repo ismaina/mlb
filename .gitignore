@@ -1,0 +1,7 @@
+*.sqlite3
+static/*
+env/
+__pypackages__/
+__pycache__/
+*.py[cod]
+*$py.class
