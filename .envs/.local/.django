@@ -1,0 +1,6 @@
+ADMIN_URL=restrictedadmin/
+SECRET_KEY='mp-local-8@olf9dk6y_&3hney%byr-2wftds86$#!)@c=t6184gez9@y2%'
+DEBUG=True
+DJANGO_ALLOWED_HOSTS=localhost
+DOMAIN='127.0.0.1:8000'
+SITE_NAME='Site Name'

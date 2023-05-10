@@ -52,12 +52,14 @@ python manage.py runserver
 
 python manage.py tailwind start
 ```
+see site [localhost:8000](localhost:8000)
 
 
 ## Customizations
 
 theme customizations can be done via
 /theme/static_src/tailwind.config.js
+see file [/theme/static_src/tailwind.config.js](/theme/static_src/tailwind.config.js)
 
 check the documentation for flowbite or daisyui theme
 [Flowbite](https://flowbite.com/docs/customize/theming/)   [DaisyUI](https://daisyui.com/theme-generator/)
