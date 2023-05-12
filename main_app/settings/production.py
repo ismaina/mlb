@@ -2,8 +2,13 @@ from .base import *
 
 USE_X_FORWARDER_HOST = True
 USE_X_FORWARDER_PORT = True
-CSRF_TRUSTED_ORIGINS = ['https://netautomate.safaricom.net','http://netautomate.safaricom.net']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8005', 'http://localhost:8059', 'http://127.0.0.1:8005', 'http://127.0.0.1:8059']
 
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8005",
+    "http://localhost:8059",
+]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 

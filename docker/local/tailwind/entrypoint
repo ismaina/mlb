@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+rabbitmq_ready() {
+    echo "Waiting for Rabbitmq to become available......:-("
+
+    while ! nc -z rabbitmq 5672; do
+        sleep 1
+    done
+
+    echo "Rabbitmq started...:-)"
+}
+
+# rabbitmq_ready
+
+exec "$@"

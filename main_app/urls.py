@@ -22,4 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("core_apps.frontend.urls", namespace="frontend")),
     path("__reload__/", include("django_browser_reload.urls")),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('__debug__/', include('debug_toolbar.urls')),
+]
+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if bool(settings.DEBUG):
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

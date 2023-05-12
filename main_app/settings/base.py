@@ -17,19 +17,18 @@ env = environ.Env()
 env.read_env(env_file='.envs/.local/.django')
 
 # Build paths inside the project like this: ROOT_DIR / 'subdir'.
-# ROOT_DIR = Path(__file__).resolve().parent.parent
-ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+MY_FILE = __file__
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-%$47*h)7l*68u!^i^n$0k4$)wc9kbstwwowl)x54rzbf84mo4m'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 APPS_DIR = ROOT_DIR / "core_apps"
@@ -56,6 +55,7 @@ THIRD_PARTY_APPS = [
     'simple_history',
     'compressor',
     'tailwind',
+    'debug_toolbar',
 ]
 
 LOCAL_APPS = [
@@ -78,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware", # 
 ]
 
 ROOT_URLCONF = 'main_app.urls'
@@ -155,18 +156,18 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-COMPRESS_ROOT = ROOT_DIR / 'static'
+STATIC_URL = "/staticfiles/"
+STATIC_ROOT = str(ROOT_DIR / "staticfiles")
+COMPRESS_ROOT = str(ROOT_DIR / "staticfiles")
 
 COMPRESS_ENABLED = True
-
+STATICFILES_DIRS = [os.path.join(APPS_DIR, 'static')]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
+    'compressor.finders.CompressorFinder',
 ]
-STATIC_URL = "/staticfiles/"
-STATIC_ROOT = str(ROOT_DIR / "static")
-
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

@@ -1,0 +1,17 @@
+# if error exit
+set -o errexit 
+set -o pipefail
+set -o nounset
+
+
+python manage.py tailwind install --no-input
+python manage.py tailwind build --no-input
+python manage.py collectstatic --no-input
+python manage.py check
+
+python manage.py tailwind start &
+
+# python manage.py runserver 0.0.0.0:8005
+
+# /usr/local/bin/gunicorn main_app.wsgi --workers=4 --bind 0.0.0.0:8005 --chdir=/app_local
+/usr/local/bin/gunicorn --config  gunicorn-cfg.py main_app.wsgi --chdir=/app_local
