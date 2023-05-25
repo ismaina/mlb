@@ -5,7 +5,9 @@ def index(request):
 
 
 def contact(request):
-
     context = {}
-
     return render(request, 'contact/contactform.html', context)
+
+def about(request):
+    context = {}
+    return render(request, 'contact/aboutus.html', context)
