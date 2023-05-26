@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -o errexit
-set -o nounset
-
-# watchmedo auto-restart -d tracker_app/ -p '*.py' -- celery -A tracker_app worker --loglevel=info
-exec celery -A tracker_app worker -l INFO

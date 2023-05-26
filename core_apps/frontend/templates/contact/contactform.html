@@ -1,8 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block content %}
-<div class="">
+<div>
+  {% if success %}
+  <section class="bg-white dark:bg-gray-900 pt-14">
+    <div
+      class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md border border-gray-50 rounded-lg shadow  dark:border-gray-600">
+      <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white lg:text-6xl">
+        Contact Us</h1>
+      <p class="text-lg font-normal">Hi {{ success.first_name}}, your feedback has been captured</p>
+    </div>
+  </section>
+
+  {% else %}
   <section class="bg-white dark:bg-gray-900 pt-14">
     <div
       class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md border border-gray-50 rounded-lg shadow  dark:border-gray-600">
@@ -10,25 +22,46 @@
         Contact Us</h1>
       <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Got an issue?
         Want to send feedback about one of our products? Need a response on any query? Let us know.</p>
-      <form action="#" class="space-y-8">
+      <form action="" method="POST" class="space-y-8" enctype="multipart/form-data">
+        {% csrf_token %}
+
         <div>
-          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your email</label>
-          <input type="email" id="email"
-            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 dark:shadow-sm-light hover:shadow-2xl"
-            placeholder="Your email address" required>
+          <label for="first_name"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.first_name.label_tag }}</label>
+          {{ form.first_name|add_class:"shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 dark:shadow-sm-light hover:shadow-2xl" }}
         </div>
         <div>
-          <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Subject</label>
-          <input type="text" id="subject"
-            class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 dark:shadow-sm-light hover:shadow-2xl"
-            placeholder="Let us know how we can help you" required>
+          <label for="last_name"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.last_name.label_tag }}</label>
+          {{ form.last_name|add_class:"shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 dark:shadow-sm-light hover:shadow-2xl" }}
         </div>
-        <div class="sm:col-span-2">
-          <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your
-            message</label>
-          <textarea id="message" rows="6"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 hover:shadow-2xl"
-            placeholder="Leave a comment..."></textarea>
+        <div>
+          <label for="phone"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.phone.label_tag }}</label>
+          {{ form.phone|add_class:"shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 dark:shadow-sm-light hover:shadow-2xl" }}
+        </div>
+        <div>
+          <label for="email"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.email.label_tag }}</label>
+          {{ form.email|add_class:"shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 dark:shadow-sm-light hover:shadow-2xl" }}
+        </div>
+        <div>
+          <label for="message"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.message.label_tag }}</label>
+          {{ form.message|add_class:"shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 dark:shadow-sm-light hover:shadow-2xl" }}
+        </div>
+        <div>
+          <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Upload an
+            image</label>
+          {{ form.image|add_class:"block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:shadow-sm-light hover:shadow-2xl" }}
+        </div>
+        <div>
+          <label for="captcha"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ form.captcha.label_tag }}</label>
+          {{ form.captcha|add_class:"shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary-500 dark:shadow-sm-light hover:shadow-2xl" }}
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500 dark:text-white"><span
+              class="font-medium">Oops!</span>{{ form.captcha.errors|safe }}!</p>
+          {% if form.captcha.errors %}{% endif %}
         </div>
         <button type="submit"
           class="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-200 py-3 px-5 text-sm font-medium text-center text-white rounded-lg btn btn-primary sm:w-fit hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Send
@@ -78,6 +111,7 @@
       </div>
     </div>
   </section>
+  {% endif %}
 </div>
 
 {% endblock content%}
