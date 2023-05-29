@@ -22,8 +22,16 @@ CACHES = {
 #     }
 # }
 
-# X_FRAME_OPTIONS= 'SAMEORIGIN'
-CORS_ALLOW_HEADERS = ['*']
+X_FRAME_OPTIONS= 'SAMEORIGIN'
+# CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 
 INTERNAL_IPS = [
     # ...
@@ -37,6 +45,13 @@ CSRF_TRUSTED_ORIGINS = ['http://django.localhost:8005', 'http://django.localhost
 
 
 CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8005",
+    "http://localhost:8059",
+    "http://django.localhost:8005",
+    "http://django.localhost:8059",
+    "http://127.0.0.1:8059",
+]
+CORS_ALLOWED_ORIGINS = [
     "http://localhost:8005",
     "http://localhost:8059",
     "http://django.localhost:8005",

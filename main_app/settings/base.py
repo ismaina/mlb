@@ -155,6 +155,8 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 TAILWIND_APP_NAME = 'theme'
 
+TAILWIND_CSS_PATH = 'css/dist/styles.css'
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -170,7 +172,7 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     'compressor.finders.CompressorFinder',
 ]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
