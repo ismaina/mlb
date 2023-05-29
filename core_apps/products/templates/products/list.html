@@ -24,7 +24,7 @@
         <button><a class="btn btn-primary" href="?page=1">&laquo; first</a></button>
         <button><a class="btn btn-primary"
             href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number}}</a></button {% endif %}
-          <button><a class="btn hover:bg-red-600" href="#">{{ page_obj.number}}</a></button>
+          <button><a class="btn dark:bg-gray-600 hover:bg-red-600 dark:hover:bg-red-600" href="#">{{ page_obj.number}}</a></button>
         {% if page_obj.has_next %}
         <button><a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">next</a></button>
         <button><a class="btn btn-primary" href="?page={{ page_obj.paginator.num_pages }}">last</a></button>
