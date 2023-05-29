@@ -64,6 +64,7 @@ LOCAL_APPS = [
     'core_apps.users',
     'core_apps.profiles',
     'core_apps.frontend',
+    'core_apps.products',
     'theme',
 ]
 
