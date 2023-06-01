@@ -1,5 +1,17 @@
 from .base import *
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-%$47*h)7l*68u!^i^n$0k4$)wc9kbstwwowl)x54rzbf84mo4m'
+
+
+env('ADMIN_URL')
+
+
+try:
+    SECRET_KEY = env("SECRET_KEY")
+except KeyError as e:
+    raise RuntimeError("Could not find a SECRET_KEY in environment") from e
+
 
 DEBUG = True
 ALLOWED_HOSTS = ['localhost','django.localhost', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-sfc-tracker-v4.eu-west-1.elasticbeanstalk.com']
@@ -66,7 +78,7 @@ SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_SECONDS = 30
 
 SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
 
