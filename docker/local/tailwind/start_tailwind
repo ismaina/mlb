@@ -1,0 +1,10 @@
+# if error exit
+set -o errexit 
+set -o pipefail
+set -o nounset
+
+
+python manage.py tailwind install --no-input;
+python manage.py tailwind build --no-input;
+python manage.py collectstatic --no-input;
+python manage.py tailwind start --no-input

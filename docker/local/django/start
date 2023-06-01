@@ -1,0 +1,11 @@
+# if error exit
+set -o errexit 
+set -o pipefail
+set -o nounset
+
+# python3 manage.py migrate --no-input
+python3 manage.py check
+python3 manage.py check --deploy
+python3 manage.py collectstatic --no-input
+# /usr/local/bin/gunicorn --certfile=/app_local/certs/netautomate.cer --keyfile=/app_local/ssl/key/netautomate.key tracker_app.wsgi --workers=4 --bind 0.0.0.0:8058 --chdir=/app_local
+/usr/local/bin/gunicorn tracker_app.wsgi --workers=2 --bind 0.0.0.0:8000 --chdir=/app_local
