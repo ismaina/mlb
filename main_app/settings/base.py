@@ -54,7 +54,7 @@ THIRD_PARTY_APPS = [
     'compressor',
     'tailwind',
     'captcha',
-    'debug_toolbar',
+    # 'debug_toolbar',
 ]
 
 LOCAL_APPS = [
@@ -80,7 +80,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware", # 
+    # "debug_toolbar.middleware.DebugToolbarMiddleware", # 
 ]
 
 ROOT_URLCONF = 'main_app.urls'

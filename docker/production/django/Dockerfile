@@ -1,16 +1,9 @@
-# ARG PYTHON_VERSION=3.10-slim-buster
-# ARG PYTHON_VERSION=python3.11-nodejs20-slim
 ARG PYTHON_VERSION=3.10-slim-buster
 
 FROM python:${PYTHON_VERSION} as python
 
 FROM python as python-build-stage
-ARG BUILD_ENVIRONMENT=local
-# ENV http_proxy "http://proxy2.safaricom.net:8080"
-# ENV https_proxy "http://proxy2.safaricom.net:8080"
-# ENV HTTPS_PROXY="http://proxy2.safaricom.net:8080"
-# ENV HTTP_PROXY="http://proxy2.safaricom.net:8080"
-
+ARG BUILD_ENVIRONMENT=production
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
    iputils-ping \
@@ -35,7 +28,7 @@ RUN pip wheel --wheel-dir /usr/src/app_production/wheels \
 
 FROM python as python-run-stage
 
-ARG BUILD_ENVIRONMENT=local
+ARG BUILD_ENVIRONMENT=production
 ARG APP_HOME=/app_production
 # prevents python from writing pyc files to disk
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -54,17 +47,6 @@ RUN mkdir ssl/key/
 
 RUN mkdir staticfiles/
 
-
-# RUN apt-get update && apt-get install --no-install-recommends -y \
-#     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-#     && rm -rf /var/lib/apt/lists/*
-# ENV http_proxy "http://proxy2.safaricom.net:8080"
-# ENV https_proxy "http://proxy2.safaricom.net:8080"
-# ENV HTTPS_PROXY="http://proxy2.safaricom.net:8080"
-# ENV HTTP_PROXY="http://proxy2.safaricom.net:8080"
-
-# create the app user
-# RUN addgroup --system django && adduser --system --group django
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     libpq-dev \

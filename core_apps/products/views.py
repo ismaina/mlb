@@ -1,14 +1,25 @@
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.http import Http404
 from .models import Product
 
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+ 
+#  @cache_page(CACHE_TTL)
+
 class ProductListView(ListView):
     queryset = Product.objects.all()
     template_name = 'products/list.html'
     paginate_by = 8
-    
+    # cache_page
 
+    # @method_decorator(cache_page(CACHE_TTL))
+    # @method_decorator(vary_on_cookie)
     def get_context_data(self, *args, **kwargs):
         context = super(ProductListView, self).get_context_data(*args, **kwargs)
         

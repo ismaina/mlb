@@ -23,11 +23,11 @@ except psycopg2.OperationalError:
 sys.exit(0)
 END
 }
-until postgres_ready; do
->&2 echo "Waiting for PostgreSQL to become available.....:-("
-sleep 10
-done
->&2 echo "PostgreSQL is ready!!!!.....:-)"
+# until postgres_ready; do
+# >&2 echo "Waiting for PostgreSQL to become available.....:-("
+# sleep 10
+# done
+# >&2 echo "PostgreSQL is ready!!!!.....:-)"
 
 rabbitmq_ready() {
     echo "Waiting for Rabbitmq to become available......:-("

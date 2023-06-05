@@ -1,7 +1,12 @@
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
 from django.shortcuts import render
 from .forms import ContactForm
 
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
+# @cache_page(CACHE_TTL)
 def index(request):
     return render(request, 'index.html')
 
@@ -24,3 +29,7 @@ def contact(request):
 def about(request):
     context = {}
     return render(request, 'contact/aboutus.html', context)
+
+def heritage(request):
+    context = {}
+    return render(request, 'heritage.html', context)

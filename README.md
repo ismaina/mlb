@@ -55,6 +55,21 @@ python manage.py tailwind start
 see site [localhost:8000](localhost:8000)
 
 
+## CA Cert
+```shell
+# Server cert
+openssl req \
+       -newkey rsa:2048 -nodes -keyout domain.key \
+       -x509 -days 365 -out domain.crt
+```
+```shell
+# Client (CA) cert    
+openssl req \
+       -newkey rsa:2048 -nodes -keyout twoway.key \
+       -x509 -days 365 -out twoway.crt
+```
+
+
 ## Customizations
 
 theme customizations can be done via

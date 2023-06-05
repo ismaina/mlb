@@ -3,5 +3,5 @@
 set -o errexit
 set -o nounset
 
-# watchmedo auto-restart -d tracker_app/ -p '*.py' -- celery -A tracker_app worker --loglevel=info
-exec celery -A tracker_app worker -l INFO
+# watchmedo auto-restart -d main_app/ -p '*.py' -- celery -A main_app worker --loglevel=info
+exec celery -A main_app worker -l INFO

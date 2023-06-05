@@ -17,4 +17,4 @@ enable_stdio_inheritance = True
 # Redirect stdout/stderr to log file
 capture_output = True
 
-daemon = True
+# daemon = True

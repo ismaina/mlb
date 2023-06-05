@@ -9,5 +9,6 @@ python3 manage.py check --deploy
 python3 manage.py collectstatic --no-input
 # python3 manage.py runsslserver 0.0.0.0:8000
 # python3 manage.py runsslserver 0.0.0.0:8000 --certificate ssl/cert.crt --key ssl/cert.key
-/usr/local/bin/gunicorn --certfile=/app_production/ssl/cert.crt --keyfile=/app_production/ssl/cert.key tracker_app.wsgi --workers=2 --bind 0.0.0.0:8000 --chdir=/app_production
-# /usr/local/bin/gunicorn tracker_app.wsgi --workers=4 --bind 0.0.0.0:8000 --chdir=/app_production
+# /usr/local/bin/gunicorn --certfile=/app_production/ssl/cert.crt --keyfile=/app_production/ssl/cert.key main_app.wsgi --workers=2 --bind 0.0.0.0:8000 --chdir=/app_production
+# /usr/local/bin/gunicorn main_app.wsgi --workers=4 --bind 0.0.0.0:8000 --chdir=/app_production
+gunicorn -c prod-cfg.py

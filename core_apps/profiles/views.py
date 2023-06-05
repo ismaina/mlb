@@ -9,7 +9,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from tracker_app.settings.local import DEFAULT_FROM_EMAIL
+from main_app.settings.local import DEFAULT_FROM_EMAIL
 from .exceptions import  NotYourProfile
 from .models import Profile
 from .pagination import ProfilePagination

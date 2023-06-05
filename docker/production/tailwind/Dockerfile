@@ -5,7 +5,7 @@ ARG PYTHON_VERSION=latest
 FROM nikolaik/python-nodejs:${PYTHON_VERSION} as python
 
 FROM python as python-build-stage
-ARG BUILD_ENVIRONMENT=local
+ARG BUILD_ENVIRONMENT=production
 
 COPY ./requirements/ .
 
@@ -17,7 +17,7 @@ RUN pip wheel --wheel-dir /usr/src/app_production/wheels \
 
 FROM python as python-run-stage
 
-ARG BUILD_ENVIRONMENT=local
+ARG BUILD_ENVIRONMENT=production
 ARG APP_HOME=/app_production
 # prevents python from writing pyc files to disk
 ENV PYTHONDONTWRITEBYTECODE 1
