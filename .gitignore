@@ -9,3 +9,4 @@ staticfiles*
 .ssh*
 mediafiles/*
 ec2-deploy.sh
+.envs/*
