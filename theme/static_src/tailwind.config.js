@@ -49,30 +49,32 @@ module.exports = {
         // '../../**/*.py'
     ],
     // enable dark mode via class strategy
-    // darkMode: 'class',
+    darkMode: 'class',
     darkTheme: "dark",
     theme: {
         extend: {},
     },
     daisyui: {
         themes: [
-          {
-            mytheme: {
-            saf: "#52b44b",
-            "primary": "#ef9eaa",       
-            "secondary": "#2563eb",
-            "accent": "#4bcca5",
-            "neutral": "#2F2D39",
-            "base-100": "#2A2145",
-            "info": "#8C9FF3",
-            "success": "#52b44b",
-            "warning": "#F1A150",
-            "error": "#F66A65",
-            "base-100": "#ffffff",
-            },
-          },
-          "dark",
-          "cupcake",
+            // {
+            //     mytheme: {
+            //     saf: "#52b44b",
+            //     "primary": "#ef9eaa",       
+            //     "secondary": "#2563eb",
+            //     "accent": "#4bcca5",
+            //     "neutral": "#2F2D39",
+            //     "base-100": "#2A2145",
+            //     "info": "#8C9FF3",
+            //     "success": "#52b44b",
+            //     "warning": "#F1A150",
+            //     "error": "#F66A65",
+            //     "base-100": "#ffffff",
+            //     },
+            // },
+            "dark",
+            "cupcake",
+            "halloween",
+            "bumblebee",
         ],
     },
     plugins: [

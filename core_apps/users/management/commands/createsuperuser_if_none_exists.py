@@ -24,13 +24,13 @@ class Command(BaseCommand):
         username = "admin"
         first_name = "admin"
         last_name = "admin"
-        email = "ep@safaricom.co.ke"
-        password = "armfulgoofinessreturnfolicunearthpurgingenforcerhandsfree"
+        email = "maina.wanjau@gmail.com"
+        password = "admin@123"
  
         user =User.objects.create_superuser(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
         user.save()
 
-        profile = user.profile
-        profile.role="analyst"
-        profile.save()
+        # profile = user.profile
+        # profile.role="analyst"
+        # profile.save()
         self.stdout.write(f'Local user "{username}" was created')

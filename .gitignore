@@ -6,3 +6,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 staticfiles*
+.ssh*
+mediafiles/*
+ec2-deploy.sh
+.envs/*

@@ -1,0 +1,8 @@
+{% load compress %}
+{% load static tailwind_tags %}
+{% load static %}
+<link rel="shortcut icon" type="image/png" href="{% static 'img/logo/mill_bakers_logo_fav_icon48_by_48.png' %}" />
+{% tailwind_css %}
+{% compress css %}
+<link rel="stylesheet" href="{% static 'css/dist/styles.css'  %}">
+{% endcompress %}

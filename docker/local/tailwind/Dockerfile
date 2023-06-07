@@ -1,3 +1,5 @@
+# ARG PYTHON_VERSION=3.10-slim-buster
+# ARG PYTHON_VERSION=python3.11-nodejs20-slim
 ARG PYTHON_VERSION=latest
 
 FROM nikolaik/python-nodejs:${PYTHON_VERSION} as python
@@ -33,7 +35,7 @@ RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
 WORKDIR ${APP_HOME}/theme/static_src
 
-RUN npm install tailwind kutty flowbite daisyui --save
+RUN npm install tailwind kutty flowbite --save
 
 WORKDIR ${APP_HOME}
 
@@ -53,7 +55,8 @@ RUN chmod +x /start_tailwind
 
 COPY . ${APP_HOME}
 
-RUN chmod -R 755 /app_local/staticfiles
+
+# RUN chmod -R 755 /app_local/staticfiles
 
 
 ENTRYPOINT ["/entrypoint"]

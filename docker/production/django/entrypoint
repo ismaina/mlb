@@ -8,24 +8,8 @@ export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES
 
 postgres_ready() {
 python << END
-from email.message import EmailMessage
-import datetime
-import smtplib
 import sys
 import psycopg2
-def send_mail(subject, message, server='172.29.229.99',from_email='no-reply@safaricom.co.ke'):
-   # import smtplib
-   receivers = ['mwanjau@safaricom.co.ke','akkarimi@safaricom.co.ke','networkprogrammability@safaricom.co.ke']
-   msg = EmailMessage()
-   msg['Subject'] = subject
-   msg['From'] = from_email
-   msg['To'] = ', '.join(receivers)
-   msg.set_content(message)
-   print(msg)
-   server = smtplib.SMTP(server)
-   server.send_message(msg)
-   server.quit()
-   print('successfully sent the mail.')
 try:
    psycopg2.connect(
       dbname="${POSTGRES_DB}",
@@ -35,25 +19,15 @@ try:
       port="${POSTGRES_PORT}",
    )
 except psycopg2.OperationalError:
-   time_stamp = datetime.datetime.now(datetime.timezone.utc).astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')
-   email_message = f"""
-   Looking Glass frontend has encountered a problem at {time_stamp}
-   Waiting for PostgreSQL to become available.....:-(
-
-   Regards,
-   NDE Team,
-   Network Programmability.
-   """
-   send_mail = send_mail("K8 DB Server Down from - Looking Glass",email_message)
    sys.exit(-1)
 sys.exit(0)
 END
 }
-until postgres_ready; do
->&2 echo "Waiting for PostgreSQL to become available.....:-("
-sleep 1
-done
->&2 echo "PostgreSQL is ready!!!!.....:-)"
+# until postgres_ready; do
+# >&2 echo "Waiting for PostgreSQL to become available.....:-("
+# sleep 10
+# done
+# >&2 echo "PostgreSQL is ready!!!!.....:-)"
 
 rabbitmq_ready() {
     echo "Waiting for Rabbitmq to become available......:-("
@@ -65,6 +39,6 @@ rabbitmq_ready() {
     echo "Rabbitmq started...:-)"
 }
 
-rabbitmq_ready
+# rabbitmq_ready
 
 exec "$@"

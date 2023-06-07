@@ -26,8 +26,6 @@ MY_FILE = __file__
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%$47*h)7l*68u!^i^n$0k4$)wc9kbstwwowl)x54rzbf84mo4m'
 
 
 
@@ -55,7 +53,8 @@ THIRD_PARTY_APPS = [
     'simple_history',
     'compressor',
     'tailwind',
-    'debug_toolbar',
+    'captcha',
+    # 'debug_toolbar',
 ]
 
 LOCAL_APPS = [
@@ -63,6 +62,7 @@ LOCAL_APPS = [
     'core_apps.users',
     'core_apps.profiles',
     'core_apps.frontend',
+    'core_apps.products',
     'theme',
 ]
 
@@ -71,14 +71,16 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware', # allows to cache entire site
     "whitenoise.middleware.WhiteNoiseMiddleware", 
     'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware', # allows to cache entire site
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware", # 
+    # "debug_toolbar.middleware.DebugToolbarMiddleware", # 
 ]
 
 ROOT_URLCONF = 'main_app.urls'
@@ -139,7 +141,7 @@ AUTH_USER_MODEL = "users.User"
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -151,6 +153,8 @@ SITE_ID = 1
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 TAILWIND_APP_NAME = 'theme'
+
+TAILWIND_CSS_PATH = 'css/dist/styles.css'
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -167,7 +171,7 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     'compressor.finders.CompressorFinder',
 ]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
