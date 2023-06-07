@@ -14,7 +14,7 @@ DEBUG = True
 
 INSTALLED_APPS += ['debug_toolbar']
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
-ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-sfc-tracker-v4.eu-west-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org','millbakers.duckdns.org', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-sfc-tracker-v4.eu-west-1.elasticbeanstalk.com']
 
 
 
