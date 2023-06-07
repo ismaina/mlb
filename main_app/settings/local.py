@@ -33,7 +33,7 @@ else:
 #     raise RuntimeError("Could not find a SECRET_KEY in environment") from e
 
 
-DEBUG = True
+DEBUG = False
 
 INSTALLED_APPS += ['debug_toolbar']
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
