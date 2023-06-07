@@ -3,6 +3,29 @@ from .base import *
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-%$47*h)7l*68u!^i^n$0k4$)wc9kbstwwowl)x54rzbf84mo4m'
 
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+else:
+    DATABASES={
+        'default':{
+            'ENGINE':'django.db.backends.postgresql',
+            'NAME':env('POSTGRES_DB'),
+            'USER':env('POSTGRES_USER'),
+            'PASSWORD':env('POSTGRES_PASSWORD'),
+            'HOST':env('POSTGRES_HOST'),
+            'PORT':env('POSTGRES_PORT'),
+
+        }
+    }
 
 # try:
 #     SECRET_KEY = env("SECRET_KEY")
