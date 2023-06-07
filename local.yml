@@ -18,6 +18,8 @@ services:
       - media_mlb_v:/app_local/mediafiles
     # ports:
     #   - "8000:8000"
+    depends_on:
+      - tailwind
     expose:
       - "8000"
     # hostname: tracker_frontend
@@ -39,8 +41,8 @@ services:
     image: mwanjau/mlbtailwind:latest
     # image: 291567501831.dkr.ecr.eu-west-1.amazonaws.com/testracker_tailwind_tracker:latest
     container_name: mlbtailwind
-    depends_on:
-      - frontend
+    # depends_on:
+    #   - frontend
     env_file:
       - ./.envs/.local/.django
     volumes:

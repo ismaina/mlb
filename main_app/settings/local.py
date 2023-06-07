@@ -53,6 +53,15 @@ CACHES = {
         'LOCATION': 'redis://redis:6379',
     }
 }
+#  DATABASES AND CACHES
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379),],
+        },
+    },
+}
 # CACHES = {
 #     'default': {
 #         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
