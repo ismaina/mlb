@@ -165,7 +165,11 @@ STATIC_ROOT = str(ROOT_DIR / "staticfiles")
 COMPRESS_ROOT = str(ROOT_DIR / "staticfiles")
 
 COMPRESS_ENABLED = True
-STATICFILES_DIRS = [os.path.join(APPS_DIR, 'static')]
+STATICFILES_DIRS = [ 
+    os.path.join(APPS_DIR, 'static'),
+    os.path.join(ROOT_DIR, 'theme/static/'),
+
+]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
