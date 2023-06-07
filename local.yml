@@ -26,7 +26,7 @@ services:
     #   - "rabbitmq:127.0.0.1"
       # - "postgres:127.0.0.1"
     networks:
-      - main-app-external-network
+      - proxy
     # labels: # new
     #   - "traefik.enable=true"
     #   - "traefik.http.routers.django.rule=Host(`tracker.local`)"
@@ -48,7 +48,7 @@ services:
       - static_mlb_v:/app_local/staticfiles
       - media_mlb_v:/app_local/mediafiles
     networks:
-      - main-app-external-network
+      - proxy
     tty: true
   
   # flower:
@@ -69,12 +69,12 @@ services:
   #     - frontend
   #     - celery_worker
   #   networks:
-  #     - main-app-external-network
+  #     - proxy
 
   # redis:
   #   image: redis:7-alpine
   #   networks:
-  #     - main-app-external-network
+  #     - proxy
 
   # celery_worker:
   #   user: nobody
@@ -92,10 +92,10 @@ services:
   #   depends_on:
   #     - frontend
   #   networks:
-  #     - main-app-external-network
+  #     - proxy
 
 networks:
-  main-app-external-network:
+  proxy:
     external: true
     
 volumes:
