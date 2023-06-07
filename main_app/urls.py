@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import ProductSitemap
 from django.conf import settings
 
 urlpatterns = [
@@ -25,6 +27,11 @@ urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
     path('captcha/', include('captcha.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": {"products": ProductSitemap}},
+    ),
 ]
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if bool(settings.DEBUG):
