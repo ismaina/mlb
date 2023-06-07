@@ -16,19 +16,19 @@ pip-prod:
 
 # for local docker
 build-local:
-	docker compose -f local.yml up --build -d --remove-orphans
+	docker-compose -f local.yml up --build -d --remove-orphans
 check-local:
-	docker compose -f local.yml ps
+	docker-compose -f local.yml ps
 restart-local:
-	docker compose -f local.yml restart
+	docker-compose -f local.yml restart
 down-local:
-	docker compose -f local.yml down
+	docker-compose -f local.yml down
 up-local:
-	docker compose -f local.yml up -d
+	docker-compose -f local.yml up -d
 logs-local:
-	docker compose -f local.yml logs -f
+	docker-compose -f local.yml logs -f
 logs-local-frontend:
-	docker compose -f local.yml logs -f frontend
+	docker-compose -f local.yml logs -f frontend
 	
 # for production docker
 build-prod:
