@@ -16,8 +16,8 @@ services:
       - .:/app_local
       - static_mlb_v:/app_local/staticfiles
       - media_mlb_v:/app_local/mediafiles
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
     expose:
       - "8000"
     # hostname: tracker_frontend
