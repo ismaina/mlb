@@ -19,8 +19,13 @@ echo "Building the image......."
 ssh -i ~/.ssh/Maina.pem ubuntu@$ec2_IP_ADDRESS << 'ENDSSH'
     cd Documents
     mkdir -p mlb
-    rm -rf mlb/* && tar -xf mlb.tar -C mlb/
+    sudo rm -rf mlb/* && tar -xf mlb.tar -C mlb/
     cd mlb
-    docker-compose -f local.yml build
+    source ../env/bin/activate
+    python manage.py collectstatic
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py createsuperuser_if_none_exists
+    docker-compose -f local.yml up -d --build --remove-orphans
 ENDSSH
 echo "Build completed successfully.......:-)"
