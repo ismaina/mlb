@@ -175,7 +175,12 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     'compressor.finders.CompressorFinder',
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# WHITENOISE_USE_FINDERS = True
+# WHITENOISE_MANIFEST_STRICT = False
+# WHITENOISE_ALLOW_ALL_ORIGINS = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
