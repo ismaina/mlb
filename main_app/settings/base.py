@@ -178,8 +178,8 @@ STATICFILES_FINDERS = [
     'compressor.finders.CompressorFinder',
 ]
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 
 WHITENOISE_USE_FINDERS = True
