@@ -22,7 +22,7 @@ accesslog = "/var/log/gunicorn/access.log"
 errorlog = "/var/log/gunicorn/error.log"
 loglevel = 'debug'
 # PID file so you can easily fetch process ID
-pidfile = "/var/run/gunicorn/prod.pid"
+# pidfile = "/var/run/gunicorn/prod.pid"
 # Redirect stdout/stderr to log file
 capture_output = True
 # Daemonize the Gunicorn process (detach & enter background)
