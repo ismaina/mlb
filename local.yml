@@ -16,6 +16,7 @@ services:
       - .:/app_local
       - static_mlb_v:/app_local/staticfiles
       - media_mlb_v:/app_local/mediafiles
+      - /var/log/gunicorn:/var/log/gunicorn
     # ports:
     #   - "8000:8000"
     depends_on:
@@ -49,6 +50,7 @@ services:
       - .:/app_local
       - static_mlb_v:/app_local/staticfiles
       - media_mlb_v:/app_local/mediafiles
+      - /var/log/gunicorn:/var/log/gunicorn
     networks:
       - proxy
     tty: true

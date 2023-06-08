@@ -105,9 +105,6 @@ COPY . ${APP_HOME}
 
 CMD ["ls","-","al"]
 
-RUN touch /var/log/gunicorn/error.log
-RUN touch /var/log/gunicorn/access.log
-RUN touch /var/run/gunicorn/prod.pid
 # RUN mkdir /app_local/staticfiles/
 
 # RUN chmod -R 755 /app_local/
