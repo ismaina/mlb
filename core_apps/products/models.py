@@ -3,6 +3,7 @@ from django.db.models import Q
 from core_apps.common.models import TimeStampedUUIDModel
 from django.db.models.signals import pre_save
 from core_apps.common.utils import upload_image_path, unique_slug_generator
+from django.urls import reverse
 
 
 class ProductQuerySet(models.query.QuerySet):
@@ -55,6 +56,9 @@ class Product(TimeStampedUUIDModel):
     active = models.BooleanField(default=True)
 
 
+    def get_absolute_url(self):
+        return reverse("products:detail", kwargs={'slug': self.slug})
+    
     def __str__(self) -> str:
         return f"{self.title}"
 

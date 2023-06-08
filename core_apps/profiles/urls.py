@@ -6,7 +6,7 @@ from .views import (
     UpdateProfileAPIView,
 )
 
-urlpatterns = [
+urlpatterns = (
     path("all/", ProfileListAPIView.as_view(), name="all-profiles"),
     path(
         "user/<str:username>/", ProfileDetailAPIView.as_view(), name="profile-details"
@@ -14,5 +14,4 @@ urlpatterns = [
     path(
         "update/<str:username>/", UpdateProfileAPIView.as_view(), name="profile-update"
     ),
-
-]
+)

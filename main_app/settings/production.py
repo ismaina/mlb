@@ -14,7 +14,7 @@ DEBUG = False
 USE_X_FORWARDER_HOST = True
 USE_X_FORWARDER_PORT = True
 ALLOWED_HOSTS = ['site.millbakers.duckdns.org', 'site.local' ,'*.millbakers.duckdns.org','localhost', '192.168.100.2','127.0.0.1' '192.168.100.2','127.0.0.1', '10.19.130.90']
-# ALLOWED_HOSTS = ['site.local','*.millbakers.duckdns.org','millbakers.duckdns.org','site.millbakers.duckdns.org','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-sfc-site-v5-dev.eu-west-1.elasticbeanstalk.com']
+# ALLOWED_HOSTS = ['site.local','*.millbakers.duckdns.org','millbakers.duckdns.org','site.millbakers.duckdns.org','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-site-v5-dev.eu-west-1.elasticbeanstalk.com']
 
 X_FRAME_OPTIONS= 'SAMEORIGIN'
 
@@ -39,7 +39,7 @@ CORS_ALLOWED_ORIGINS = [
 
 
 CSRF_TRUSTED_ORIGINS = ['https://site.mwanjau.duckdns.org', 'https://10.19.130.90', 'https://site.mwanjau.duckdns.org','http://*.site.local','https://*site.local', 'https://172.19.0.*', 'https://127.0.0.1', 'https://*.127.0.0.1']
-# CSRF_TRUSTED_ORIGINS = ['https://uat-sfc-site-v3.eu-west-1.elasticbeanstalk.com','http://uat-sfc-site-v3.eu-west-1.elasticbeanstalk.com','https://*.127.0.0.1','http://*.127.0.0.1']
+# CSRF_TRUSTED_ORIGINS = ['https://uat-mlb-site-v3.eu-west-1.elasticbeanstalk.com','http://uat-mlb-site-v3.eu-west-1.elasticbeanstalk.com','https://*.127.0.0.1','http://*.127.0.0.1']
 
 
 CORS_ALLOW_HEADERS = ['*']

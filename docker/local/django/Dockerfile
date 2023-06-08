@@ -6,10 +6,6 @@ FROM python:${PYTHON_VERSION} as python
 
 FROM python as python-build-stage
 ARG BUILD_ENVIRONMENT=local
-# ENV http_proxy "http://proxy2.safaricom.net:8080"
-# ENV https_proxy "http://proxy2.safaricom.net:8080"
-# ENV HTTPS_PROXY="http://proxy2.safaricom.net:8080"
-# ENV HTTP_PROXY="http://proxy2.safaricom.net:8080"
 
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -56,16 +52,6 @@ RUN mkdir staticfiles/
 
 RUN mkdir -pv /var/{log,run}/gunicorn/
 
-# RUN apt-get update && apt-get install --no-install-recommends -y \
-#     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-#     && rm -rf /var/lib/apt/lists/*
-# ENV http_proxy "http://proxy2.safaricom.net:8080"
-# ENV https_proxy "http://proxy2.safaricom.net:8080"
-# ENV HTTPS_PROXY="http://proxy2.safaricom.net:8080"
-# ENV HTTP_PROXY="http://proxy2.safaricom.net:8080"
-
-# create the app user
-# RUN addgroup --system django && adduser --system --group django
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     libpq-dev \

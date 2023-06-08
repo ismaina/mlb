@@ -60,8 +60,7 @@ services:
   #     context: .
   #     dockerfile: ./docker/local/django/Dockerfile
   #   command: /start-flower
-  #   image: ocr2.devocp.safaricom.net/beaver-squad/flower_tracker:latest
-  #   # image: 291567501831.dkr.ecr.eu-west-1.amazonaws.com/testracker_flower_tracker:latest
+  
   #   container_name: flower_tracker
   #   volumes:
   #     - .:/app
@@ -86,8 +85,6 @@ services:
   #     context: .
   #     dockerfile: ./docker/local/django/Dockerfile
   #   command: /start-celeryworker
-  #   image: ocr2.devocp.safaricom.net/beaver-squad/celery_worker_tracker:latest
-  #   # image: 291567501831.dkr.ecr.eu-west-1.amazonaws.com/testracker_celery_worker_tracker:latest
   #   container_name: celery_worker_tracker
   #   volumes:
   #     - .:/app
