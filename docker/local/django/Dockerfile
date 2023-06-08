@@ -54,6 +54,7 @@ RUN mkdir ssl/key/
 
 RUN mkdir staticfiles/
 
+RUN mkdir -pv /var/{log,run}/gunicorn/ 
 
 # RUN apt-get update && apt-get install --no-install-recommends -y \
 #     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
