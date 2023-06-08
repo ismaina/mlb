@@ -149,6 +149,9 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 
+ADMINS = [("""Maina Wanjau""", "maina.wanjau@gmail.com"),]
+
+MANAGERS = ADMINS
 
 # LOGGING = {
 #     "version": 1,
