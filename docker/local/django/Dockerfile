@@ -56,10 +56,6 @@ RUN mkdir staticfiles/
 
 RUN mkdir -pv /var/{log,run}/gunicorn/
 
-RUN touch /var/log/gunicorn/error.log
-RUN touch /var/log/gunicorn/access.log
-RUN touch /var/run/gunicorn/prod.pid
-
 # RUN apt-get update && apt-get install --no-install-recommends -y \
 #     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
 #     && rm -rf /var/lib/apt/lists/*
@@ -109,6 +105,9 @@ COPY . ${APP_HOME}
 
 CMD ["ls","-","al"]
 
+RUN touch /var/log/gunicorn/error.log
+RUN touch /var/log/gunicorn/access.log
+RUN touch /var/run/gunicorn/prod.pid
 # RUN mkdir /app_local/staticfiles/
 
 # RUN chmod -R 755 /app_local/
