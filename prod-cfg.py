@@ -5,6 +5,7 @@ Copyright (c) 2023 - present Maina Wanjau
 import multiprocessing
 # import ssl    
 
+chdir="/app_local"
 # Django WSGI application path in pattern MODULE_NAME:VARIABLE_NAME
 wsgi_app = "main_app.wsgi:application"
 # The number of worker processes for handling requests
