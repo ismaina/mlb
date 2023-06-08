@@ -109,7 +109,7 @@ CMD ["ls","-","al"]
 
 # RUN chmod -R 755 /app_local/
 RUN chmod -R 755 /app_local/staticfiles/
-RUN chmod -R 755 /app_local/mediafiles/
+RUN chmod -R 775 /app_local/mediafiles/
 
 # USER django
 
