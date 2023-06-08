@@ -28,7 +28,6 @@ MY_FILE = __file__
 
 
 
-
 APPS_DIR = ROOT_DIR / "core_apps"
 
 # Application definition
