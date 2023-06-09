@@ -4,7 +4,7 @@ env = environ.Env()
 env.read_env(env_file='.envs/.local/.django')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%$47*h)7l*68u!^i^n$0k4$)wc9kbstwwowl)x54rzbf84mo4m'
+SECRET_KEY = env('SECRET_KEY')
 
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
@@ -38,9 +38,9 @@ else:
 
 DEBUG = False
 
-INSTALLED_APPS += ['debug_toolbar']
-MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org','millbakers.duckdns.org', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-tracker-v4.eu-west-1.elasticbeanstalk.com']
+# INSTALLED_APPS += ['debug_toolbar']
+# MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
 
 

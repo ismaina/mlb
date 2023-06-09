@@ -165,6 +165,13 @@ TAILWIND_CSS_PATH = 'css/dist/styles.css'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATIC_URL = "/staticfiles/"
 STATIC_ROOT = str(ROOT_DIR / "staticfiles")
@@ -204,10 +211,3 @@ MEDIA_URL = "/mediafiles/"
 # MEDIA_URL = "https://site.millbakers.duckdns.org/mediafiles/"
 MEDIA_ROOT = str(ROOT_DIR / "mediafiles")
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUD_NAME'),
-    'API_KEY': env('CLOUDINARY_API'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET'),
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
