@@ -189,6 +189,6 @@ WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# MEDIA_URL = "/mediafiles/"
-MEDIA_URL = "https://site.millbakers.duckdns.org/mediafiles/"
+MEDIA_URL = "/mediafiles/"
+# MEDIA_URL = "https://site.millbakers.duckdns.org/mediafiles/"
 MEDIA_ROOT = str(ROOT_DIR / "mediafiles")
