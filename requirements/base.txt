@@ -18,3 +18,5 @@ watchdog==3.0.0
 whitenoise==6.4.0
 pymemcache==4.0.0
 redis==4.5.5
+cloudinary==1.33.0
+django-cloudinary-storage==0.3.0

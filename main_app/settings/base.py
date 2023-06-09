@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import environ
 import os
+
+import cloudinary
+import cloudinary_storage
 env = environ.Env()
 env.read_env(env_file='.envs/.local/.django')
 
@@ -55,6 +58,8 @@ THIRD_PARTY_APPS = [
     'compressor',
     'tailwind',
     'captcha',
+    'cloudinary',
+    'cloudinary_storage',
     # 'debug_toolbar',
 ]
 
@@ -176,6 +181,12 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     'compressor.finders.CompressorFinder',
 ]
+STORAGES = {
+    # ...
+    "mediafiles": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+}
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
@@ -192,3 +203,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = "/mediafiles/"
 # MEDIA_URL = "https://site.millbakers.duckdns.org/mediafiles/"
 MEDIA_ROOT = str(ROOT_DIR / "mediafiles")
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+}
+
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

@@ -89,3 +89,12 @@ Please make sure to update tests as appropriate.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+<!-- TODO 
+
+Check on django storages, use dropbox for media files
+https://whitenoise.readthedocs.io/en/latest/django.html#serving-media-files
+
+
+https://danidiaztech.com/setup-django-media-files/
+ -->

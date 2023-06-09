@@ -1,5 +1,8 @@
 from .base import *
 
+env = environ.Env()
+env.read_env(env_file='.envs/.local/.django')
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-%$47*h)7l*68u!^i^n$0k4$)wc9kbstwwowl)x54rzbf84mo4m'
 
