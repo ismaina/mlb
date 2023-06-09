@@ -96,6 +96,4 @@ networks:
     
 volumes:
   static_mlb_v:
-    external: true
   media_mlb_v:
-    external: true
