@@ -1,22 +1,44 @@
 from .base import *
 
+env = environ.Env()
+env.read_env(env_file='.envs/.local/.django')
+
+# SECURITY WARNING: keep the secret key used in production secret!
 try:
     SECRET_KEY = env("SECRET_KEY")
 except KeyError as e:
     raise RuntimeError("Could not find a SECRET_KEY in environment") from e
 
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+else:
+    DATABASES={
+        'default':{
+            'ENGINE':'django.db.backends.postgresql',
+            'NAME':env('POSTGRES_DB'),
+            'USER':env('POSTGRES_USER'),
+            'PASSWORD':env('POSTGRES_PASSWORD'),
+            'HOST':env('POSTGRES_HOST'),
+            'PORT':env('POSTGRES_PORT'),
 
-DATABASES = {"default": env.db("DATABASE_URL")}
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
+        }
+    }
 
 DEBUG = False
 
-USE_X_FORWARDER_HOST = True
-USE_X_FORWARDER_PORT = True
-ALLOWED_HOSTS = ['site.millbakers.duckdns.org', 'site.local' ,'*.millbakers.duckdns.org','localhost', '192.168.100.2','127.0.0.1' '192.168.100.2','127.0.0.1', '10.19.130.90']
-# ALLOWED_HOSTS = ['site.local','*.millbakers.duckdns.org','millbakers.duckdns.org','site.millbakers.duckdns.org','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-site-v5-dev.eu-west-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org','millbakers.duckdns.org', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-tracker-v4.eu-west-1.elasticbeanstalk.com']
+# INSTALLED_APPS += ['debug_toolbar']
+# MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
-X_FRAME_OPTIONS= 'SAMEORIGIN'
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
 CACHE_MIDDLEWARE_ALIAS = 'default'
@@ -27,7 +49,6 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
         'LOCATION': 'redis://redis:6379',
-        
     }
 }
 #  DATABASES AND CACHES
@@ -51,9 +72,14 @@ CORS_ALLOW_HEADERS = (
     "x-requested-with",
 )
 
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    "localhost",
+    # ...
+]
 
-CSRF_TRUSTED_ORIGINS = ['https://site.mwanjau.duckdns.org', 'https://10.19.130.90', 'https://site.mwanjau.duckdns.org','http://*.site.local','https://*site.local', 'https://172.19.0.*', 'https://127.0.0.1', 'https://*.127.0.0.1']
-# CSRF_TRUSTED_ORIGINS = ['https://uat-mlb-site-v3.eu-west-1.elasticbeanstalk.com','http://uat-mlb-site-v3.eu-west-1.elasticbeanstalk.com','https://*.127.0.0.1','http://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://site.millbakers.duckdns.org','http://django.localhost', 'http://millbakers.duckdns.org:8001','https://millbakers.duckdns.org:8001', 'http://127.0.0.1:8005', 'http://127.0.0.1:8059']
 
 
 CORS_ORIGIN_WHITELIST = [
@@ -63,6 +89,8 @@ CORS_ORIGIN_WHITELIST = [
     "https://site.millbakers.duckdns.org",
     "https://site.millbakers.duckdns.org:8005",
     "https://site.millbakers.duckdns.org:8059",
+    "http://millbakers.duckdns.org:8001",
+    "https://millbakers.duckdns.org:8001",
     "http://127.0.0.1:8059",
 ]
 CORS_ALLOWED_ORIGINS = [
@@ -72,6 +100,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://site.millbakers.duckdns.org",
     "https://site.millbakers.duckdns.org:8005",
     "https://site.millbakers.duckdns.org:8059",
+    "http://millbakers.duckdns.org:8001",
+    "https://millbakers.duckdns.org:8001",
     "http://127.0.0.1:8059",
 ]
 
@@ -82,7 +112,7 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-SECURE_HSTS_SECONDS = 2_592_000  # 30 days
+SECURE_HSTS_SECONDS = 30
 
 SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
 
@@ -94,17 +124,11 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
     "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True
 )
 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:    
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-ADMINS = [("""Maina Wanjau""", "maina.wanjau@gmail.com"),]
 
-MANAGERS = ADMINS
-
-DEFAULT_FROM_EMAIL = env(
-    "DJANGO_DEFAULT_FROM_EMAIL",
-    default="Maina Wanjau <maina.wanjau@gmail.com>",
-)
-
-SITE_NAME = "Mill Bakers"
 # # Email settings1
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -112,18 +136,31 @@ EMAIL_HOST_USER = 'agripmart@gmail.com'
 EMAIL_HOST_PASSWORD = 'xsvwohyiyyszcbro'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-SERVER_EMAIL = env("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
 
-EMAIL_SUBJECT_PREFIX = env(
-    "DJANGO_EMAIL_SUBJECT_PREFIX",
-    default="[Millbakers Website]",
-)
+CELERY_BROKER_URL = env("CELERY_BROKER")
+CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
+CELERY_TIMEZONE = "Africa/Nairobi"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
 
+ADMINS = [("""Maina Wanjau""", "maina.wanjau@gmail.com"),]
 
+MANAGERS = ADMINS
+
+# LOGGING
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse"
+            },
+            # TODO: remove the below
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue"
+            }
+        },
     "formatters": {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s "
@@ -144,6 +181,10 @@ LOGGING = {
     },
     "root": {"level": "INFO", "handlers": ["console"]},
     "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "propagate": True,
+        },
         "django.request": {
             "handlers": ["mail_admins"],
             "level": "ERROR",
