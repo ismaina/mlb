@@ -35,7 +35,7 @@ else:
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org','millbakers.duckdns.org', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-tracker-v4.eu-west-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org','millbakers.duckdns.org:8001', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-tracker-v4.eu-west-1.elasticbeanstalk.com']
 # INSTALLED_APPS += ['debug_toolbar']
 # MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
