@@ -92,7 +92,7 @@ INTERNAL_IPS = [
     # ...
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://site.millbakers.duckdns.org','http://django.localhost', 'http://site.millbakers.duckdns.org:8001', 'http://127.0.0.1:8005', 'http://127.0.0.1:8059']
+CSRF_TRUSTED_ORIGINS = ['https://site.millbakers.duckdns.org','http://django.localhost', 'http://millbakers.duckdns.org:8001', 'http://127.0.0.1:8005', 'http://127.0.0.1:8059']
 
 
 CORS_ORIGIN_WHITELIST = [
@@ -102,7 +102,7 @@ CORS_ORIGIN_WHITELIST = [
     "https://site.millbakers.duckdns.org",
     "https://site.millbakers.duckdns.org:8005",
     "https://site.millbakers.duckdns.org:8059",
-    "http://site.millbakers.duckdns.org:8001",
+    "http://millbakers.duckdns.org:8001",
     "http://127.0.0.1:8059",
 ]
 CORS_ALLOWED_ORIGINS = [
@@ -112,7 +112,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://site.millbakers.duckdns.org",
     "https://site.millbakers.duckdns.org:8005",
     "https://site.millbakers.duckdns.org:8059",
-    "http://site.millbakers.duckdns.org:8001",
+    "http://millbakers.duckdns.org:8001",
     "http://127.0.0.1:8059",
 ]
 
