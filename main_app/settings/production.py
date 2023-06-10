@@ -17,32 +17,63 @@ ALLOWED_HOSTS = ['site.millbakers.duckdns.org', 'site.local' ,'*.millbakers.duck
 # ALLOWED_HOSTS = ['site.local','*.millbakers.duckdns.org','millbakers.duckdns.org','site.millbakers.duckdns.org','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-site-v5-dev.eu-west-1.elasticbeanstalk.com']
 
 X_FRAME_OPTIONS= 'SAMEORIGIN'
+# Cache time to live is 15 minutes.
+CACHE_TTL = 60 * 15
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 60 * 15  # 15 minutes
+CACHE_MIDDLEWARE_KEY_PREFIX = 'mlb'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://redis:6379',
+    }
+}
+#  DATABASES AND CACHES
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379),],
+        },
+    },
+}
 
-CORS_ORIGIN_WHITELIST = [
-    "https://10.19.130.90",
-    "https://site.local",
-    "https://site.millbakers.duckdns.org",
-    "http://site.millbakers.duckdns.org",
-    "https://172.19.0.*",
-    "https://site.local:8090",
-]
-
-CORS_ALLOWED_ORIGINS = [
-    "https://10.19.130.90",
-    "https://site.local",
-    "http://site.millbakers.duckdns.org",
-    "https://site.millbakers.duckdns.org",
-    "https://172.19.0.*",
-    "https://site.local:8090",
-]
+X_FRAME_OPTIONS= 'SAMEORIGIN'
+# CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 
 
 CSRF_TRUSTED_ORIGINS = ['https://site.mwanjau.duckdns.org', 'https://10.19.130.90', 'https://site.mwanjau.duckdns.org','http://*.site.local','https://*site.local', 'https://172.19.0.*', 'https://127.0.0.1', 'https://*.127.0.0.1']
 # CSRF_TRUSTED_ORIGINS = ['https://uat-mlb-site-v3.eu-west-1.elasticbeanstalk.com','http://uat-mlb-site-v3.eu-west-1.elasticbeanstalk.com','https://*.127.0.0.1','http://*.127.0.0.1']
 
 
-CORS_ALLOW_HEADERS = ['*']
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8005",
+    "http://django.localhost:8000",
+    "http://localhost:8059",
+    "https://site.millbakers.duckdns.org",
+    "https://site.millbakers.duckdns.org:8005",
+    "https://site.millbakers.duckdns.org:8059",
+    "http://127.0.0.1:8059",
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8005",
+    "http://django.localhost:8000",
+    "http://localhost:8059",
+    "https://site.millbakers.duckdns.org",
+    "https://site.millbakers.duckdns.org:8005",
+    "https://site.millbakers.duckdns.org:8059",
+    "http://127.0.0.1:8059",
+]
+
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 SECURE_SSL_REDIRECT = True
@@ -62,7 +93,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
     "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True
 )
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ADMINS = [("""Maina Wanjau""", "maina.wanjau@gmail.com"),]
 

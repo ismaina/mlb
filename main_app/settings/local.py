@@ -36,7 +36,7 @@ else:
 #     raise RuntimeError("Could not find a SECRET_KEY in environment") from e
 
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org','millbakers.duckdns.org', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-tracker-v4.eu-west-1.elasticbeanstalk.com']
 # INSTALLED_APPS += ['debug_toolbar']
