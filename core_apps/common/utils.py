@@ -16,7 +16,7 @@ def upload_image_path(instance, filename):
     new_filename = random.randint(1,909982308340)
     name, ext  = get_filename_ext(filename)
     final_filename = '{new_filename}{ext}'.format(new_filename = new_filename, ext = ext)
-    return "feedback/{new_filename}/{final_filename}".format(new_filename='feedback', final_filename=final_filename)
+    return "products/{new_filename}/{final_filename}".format(new_filename='products', final_filename=final_filename)
 
 
 
