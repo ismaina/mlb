@@ -30,7 +30,7 @@ def about(request):
     context = {}
     return render(request, 'contact/aboutus.html', context)
 
-@cache_page(CACHE_TTL)
+@cache_page(CACHE_TTL, key_prefix='heritage')
 def heritage(request):
     context = {}
     return render(request, 'heritage.html', context)

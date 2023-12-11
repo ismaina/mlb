@@ -1,5 +1,7 @@
 -r base.txt
 
-black==23.1.0
-flake8==6.0.0
-django-debug-toolbar==4.0.0
+black
+flake8
+isort
+django-debug-toolbar
+watchfiles

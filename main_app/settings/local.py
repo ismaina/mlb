@@ -1,43 +1,53 @@
 from .base import *
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%$47*h)7l*68u!^i^n$0k4$)wc9kbstwwowl)x54rzbf84mo4m'
-
-if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
-    }
-else:
-    DATABASES={
-        'default':{
-            'ENGINE':'django.db.backends.postgresql',
-            'NAME':env('POSTGRES_DB'),
-            'USER':env('POSTGRES_USER'),
-            'PASSWORD':env('POSTGRES_PASSWORD'),
-            'HOST':env('POSTGRES_HOST'),
-            'PORT':env('POSTGRES_PORT'),
-
-        }
-    }
-
-# try:
-#     SECRET_KEY = env("SECRET_KEY")
-# except KeyError as e:
-#     raise RuntimeError("Could not find a SECRET_KEY in environment") from e
+from .base import env
 
 
-DEBUG = False
+
+try:
+    SECRET_KEY = env(
+    "DJANGO_SECRET_KEY",
+    default="-DMIQLNG-I9AetRVHv0HU3UAtT6hX1JL2fReDAyYSNsqPPUO5aE",
+)
+except KeyError as e:
+    raise RuntimeError("Could not find a SECRET_KEY in environment") from e
+
+DEBUG = True
 
 INSTALLED_APPS += ['debug_toolbar']
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org','millbakers.duckdns.org', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-sfc-tracker-v4.eu-west-1.elasticbeanstalk.com']
+
+# ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost"])
+
+# if 'POSTGRES_DB' in os.environ:
+#     # DATABASES={
+#     #     'default':{
+#     #         'ENGINE':'django.db.backends.postgresql',
+#     #         'NAME':env('POSTGRES_DB'),
+#     #         'USER':env('POSTGRES_USER'),
+#     #         'PASSWORD':env('POSTGRES_PASSWORD'),
+#     #         'HOST':env('POSTGRES_HOST'),
+#     #         'PORT':env('POSTGRES_PORT'),
+#     #     }
+#     # }
+#     DATABASES = {"default": env.db("DATABASE_URL")}
+#     # DATABASES = {"default": env("DATABASE_URL")}
+#     DATABASES["default"]["ATOMIC_REQUESTS"] = True
+
+# else:
+#     DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
+}
 
 
 
@@ -47,21 +57,28 @@ CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 60 * 15  # 15 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'mlb'
 
+CELERY_BROKER_URL = env("CELERY_BROKER")
+CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_RESULT_BACKEND_MAX_RETRIES = 10
+CELERY_TASK_SEND_SENT_EVENT = True
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://redis:6379',
+        'LOCATION': env("CELERY_BACKEND"),
     }
 }
 #  DATABASES AND CACHES
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379),],
-        },
-    },
-}
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [('127.0.0.1', 6379),],
+#         },
+#     },
+# }
 # CACHES = {
 #     'default': {
 #         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
@@ -141,6 +158,9 @@ EMAIL_HOST_USER = 'agripmart@gmail.com'
 EMAIL_HOST_PASSWORD = 'xsvwohyiyyszcbro'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+DEFAULT_FROM_EMAIL = "support@maina_wanjau.com"
+DOMAIN = env("DOMAIN")
+SITE_NAME = "Mill Bakers"
 
 CELERY_BROKER_URL = env("CELERY_BROKER")
 CELERY_RESULT_BACKEND = env("CELERY_BACKEND")

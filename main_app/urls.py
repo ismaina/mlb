@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
     path("", include("core_apps.frontend.urls", namespace="frontend")),
     path("products/", include("core_apps.products.urls", namespace='products')),
     path("__reload__/", include("django_browser_reload.urls")),
@@ -29,3 +29,10 @@ urlpatterns = [
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if bool(settings.DEBUG):
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+admin.site.site_header = "Mill Bakers Admin"
+
+admin.site.site_title = "Mill Bakers Admin Portal"
+
+admin.site.index_title = "Welcome to Mill Bakers portal"

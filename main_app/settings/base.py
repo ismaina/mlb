@@ -54,6 +54,11 @@ THIRD_PARTY_APPS = [
     'compressor',
     'tailwind',
     'captcha',
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "taggit",
+    "django_extensions",
     # 'debug_toolbar',
 ]
 
@@ -80,7 +85,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
-    # "debug_toolbar.middleware.DebugToolbarMiddleware", # 
+    'allauth.account.middleware.AccountMiddleware', 
 ]
 
 ROOT_URLCONF = 'main_app.urls'
@@ -149,6 +154,7 @@ USE_TZ = True
 
 SITE_ID = 1
 
+ADMIN_URL = env('ADMIN_URL')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
