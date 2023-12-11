@@ -28,3 +28,5 @@ watchdog
 whitenoise
 pymemcache
 redis
+cloudinary
+django-cloudinary-storage

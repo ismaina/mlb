@@ -6,7 +6,7 @@ from .forms import ContactForm
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
-# @cache_page(CACHE_TTL)
+@cache_page(CACHE_TTL)
 def index(request):
     return render(request, 'index.html')
 
@@ -30,7 +30,7 @@ def about(request):
     context = {}
     return render(request, 'contact/aboutus.html', context)
 
-@cache_page(CACHE_TTL, key_prefix='heritage')
+@cache_page(CACHE_TTL)
 def heritage(request):
     context = {}
     return render(request, 'heritage.html', context)

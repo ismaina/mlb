@@ -5,6 +5,7 @@ Copyright (c) 2023 - present Maina Wanjau
 import multiprocessing
 # import ssl    
 
+chdir="/app_local"
 # Django WSGI application path in pattern MODULE_NAME:VARIABLE_NAME
 wsgi_app = "main_app.wsgi:application"
 # The number of worker processes for handling requests
@@ -21,7 +22,7 @@ accesslog = "/var/log/gunicorn/access.log"
 errorlog = "/var/log/gunicorn/error.log"
 loglevel = 'debug'
 # PID file so you can easily fetch process ID
-pidfile = "/var/run/gunicorn/prod.pid"
+# pidfile = "/var/run/gunicorn/prod.pid"
 # Redirect stdout/stderr to log file
 capture_output = True
 # Daemonize the Gunicorn process (detach & enter background)

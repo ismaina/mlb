@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import environ
 import os
+import cloudinary
+import cloudinary_storage
+
 env = environ.Env()
 env.read_env(env_file='.envs/.local/.django')
 
@@ -25,7 +28,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 MY_FILE = __file__
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
 
 
 
@@ -43,6 +45,8 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.humanize',
+    "django.contrib.sites", 
+    "django.contrib.sitemaps", 
     'django_browser_reload',
 ]
 
@@ -59,7 +63,8 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "taggit",
     "django_extensions",
-    # 'debug_toolbar',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 LOCAL_APPS = [
@@ -75,9 +80,9 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware", 
     'django.contrib.sessions.middleware.SessionMiddleware',
     # 'django.middleware.cache.UpdateCacheMiddleware', # allows to cache entire site
-    "whitenoise.middleware.WhiteNoiseMiddleware", 
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.cache.FetchFromCacheMiddleware', # allows to cache entire site
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -165,6 +170,13 @@ TAILWIND_CSS_PATH = 'css/dist/styles.css'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATIC_URL = "/staticfiles/"
 STATIC_ROOT = str(ROOT_DIR / "staticfiles")
@@ -181,8 +193,19 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     'compressor.finders.CompressorFinder',
 ]
+STORAGES = {
+    # ...
+    "staticfiles":{
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+    "mediafiles": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+}
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+
 
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_MANIFEST_STRICT = False
@@ -193,4 +216,6 @@ WHITENOISE_ALLOW_ALL_ORIGINS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "/mediafiles/"
+# MEDIA_URL = "https://site.millbakers.duckdns.org/mediafiles/"
 MEDIA_ROOT = str(ROOT_DIR / "mediafiles")
+
