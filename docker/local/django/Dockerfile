@@ -1,6 +1,6 @@
 # ARG PYTHON_VERSION=3.10-slim-buster
 # ARG PYTHON_VERSION=python3.11-nodejs20-slim
-ARG PYTHON_VERSION=3.10-slim-buster
+ARG PYTHON_VERSION=3.11-slim-buster
 
 FROM python:${PYTHON_VERSION} as python
 

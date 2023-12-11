@@ -68,7 +68,13 @@ openssl req \
        -newkey rsa:2048 -nodes -keyout twoway.key \
        -x509 -days 365 -out twoway.crt
 ```
+```shell
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout mysite.key -out mysite.crt
+```
 
+https://03e8-196-110-33-68.ngrok-free.app
+ngrok http https://localhost:8011 
+ngrok http --domain=caribou-sweet-wallaby.ngrok-free.app https://localhost:8011
 
 ## Customizations
 

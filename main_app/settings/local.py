@@ -1,8 +1,6 @@
 from .base import *
 from .base import env
 
-
-DEBUG = True
 try:
     SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
@@ -11,36 +9,33 @@ try:
 except KeyError as e:
     raise RuntimeError("Could not find a SECRET_KEY in environment") from e
 
-ALLOWED_HOSTS = ['localhost','django.localhost',]
+
+# DEBUG = bool(env('DEBUG', default=True))
+DEBUG = True
+
 INSTALLED_APPS += ['debug_toolbar']
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+ALLOWED_HOSTS = ['localhost','django.localhost','caribou-sweet-wallaby.ngrok-free.app']
 
 # ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost"])
 
-# if 'POSTGRES_DB' in os.environ:
-#     # DATABASES={
-#     #     'default':{
-#     #         'ENGINE':'django.db.backends.postgresql',
-#     #         'NAME':env('POSTGRES_DB'),
-#     #         'USER':env('POSTGRES_USER'),
-#     #         'PASSWORD':env('POSTGRES_PASSWORD'),
-#     #         'HOST':env('POSTGRES_HOST'),
-#     #         'PORT':env('POSTGRES_PORT'),
-#     #     }
-#     # }
-#     DATABASES = {"default": env.db("DATABASE_URL")}
-#     # DATABASES = {"default": env("DATABASE_URL")}
-#     DATABASES["default"]["ATOMIC_REQUESTS"] = True
+if 'POSTGRES_DB' in os.environ:
+    # DATABASES={
+    #     'default':{
+    #         'ENGINE':'django.db.backends.postgresql',
+    #         'NAME':env('POSTGRES_DB'),
+    #         'USER':env('POSTGRES_USER'),
+    #         'PASSWORD':env('POSTGRES_PASSWORD'),
+    #         'HOST':env('POSTGRES_HOST'),
+    #         'PORT':env('POSTGRES_PORT'),
+    #     }
+    # }
+    DATABASES = {"default": env.db("DATABASE_URL")}
+    # DATABASES = {"default": env("DATABASE_URL")}
+    DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
-# else:
-#     DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'mydatabase',
-#     }
-# }
-
-DATABASES = {
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'mydatabase',
@@ -50,7 +45,7 @@ DATABASES = {
 
 
 # Cache time to live is 15 minutes.
-CACHE_TTL = 60 * 1
+CACHE_TTL = 60 * 15     # 15 minutes caching
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 60 * 15  # 15 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'mlb'
@@ -77,12 +72,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-#         'LOCATION': '127.0.0.1:11211',
-#     }
-# }
 
 X_FRAME_OPTIONS= 'SAMEORIGIN'
 # CORS_ALLOW_HEADERS = ['*']
@@ -103,12 +92,12 @@ INTERNAL_IPS = [
     # ...
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://site.millbakers.duckdns.org','http://django.localhost', 'http://millbakers.duckdns.org:8001', 'http://127.0.0.1:8005', 'http://127.0.0.1:8059']
+CSRF_TRUSTED_ORIGINS = ['https://site.millbakers.duckdns.org','http://django.localhost', 'http://django.localhost:8001']
 
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8005",
-    "http://django.localhost:8000",
+    "http://django.localhost:8001",
     "http://localhost:8059",
     "https://site.millbakers.duckdns.org",
     "https://site.millbakers.duckdns.org:8005",
@@ -118,7 +107,7 @@ CORS_ORIGIN_WHITELIST = [
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8005",
-    "http://django.localhost:8000",
+    "http://django.localhost:8001",
     "http://localhost:8059",
     "https://site.millbakers.duckdns.org",
     "https://site.millbakers.duckdns.org:8005",

@@ -5,12 +5,12 @@
 {% block content %}
 <div>
   {% if success %}
-  <section class="bg-white dark:bg-gray-900 pt-14">
+  <section class="h-screen bg-white dark:bg-gray-900 pt-14">
     <div
-      class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md border border-gray-50 rounded-lg shadow  dark:border-gray-600">
+      class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md border border-gray-50 rounded-lg shadow  dark:bg-gray-900 dark:border-gray-600">
       <h1 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white lg:text-6xl">
         Contact Us</h1>
-      <p class="text-lg font-normal">Hi {{ success.first_name}}, your feedback has been captured</p>
+      <p class="text-lg font-normal dark:text-gray-300">Hi {{ success.first_name}}, your feedback has been captured</p>
     </div>
   </section>
 

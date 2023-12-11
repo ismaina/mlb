@@ -12,11 +12,13 @@ services:
     #   - rabbitmq
     env_file:
       - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
     volumes:
       - .:/app_local
       - static_mlb_v:/app_local/staticfiles
       - media_mlb_v:/app_local/mediafiles
       - /var/log/gunicorn:/var/log/gunicorn
+      - /etc/localtime:/etc/localtime:ro
     # ports:
     #   - "8000:8000"
     depends_on:
@@ -51,6 +53,7 @@ services:
       - static_mlb_v:/app_local/staticfiles
       - media_mlb_v:/app_local/mediafiles
       - /var/log/gunicorn:/var/log/gunicorn
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - proxy
     tty: true
@@ -74,21 +77,22 @@ services:
   #   networks:
   #     - proxy
 
-  # nginx:
-  #   restart: always
-  #   depends_on:
-  #     - frontend
-  #   container_name: mlbnginx
-  #   volumes:
-  #     - static_mlb_v:/app_local/staticfiles
-  #     - media_mlb_v:/app_local/mediafiles
-  #   build:
-  #     context: ./docker/local/nginx
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8001:82"
-  #   networks:
-  #     - proxy
+  nginx:
+    restart: always
+    depends_on:
+      - frontend
+    container_name: mlbnginx
+    volumes:
+      - static_mlb_v:/app_local/staticfiles
+      - media_mlb_v:/app_local/mediafiles
+      - /etc/localtime:/etc/localtime:ro
+    build:
+      context: ./docker/local/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8001:82"
+    networks:
+      - proxy
 
 networks:
   proxy:
