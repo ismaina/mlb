@@ -14,11 +14,9 @@ workers = multiprocessing.cpu_count() * 2 + 1
 bind = '0.0.0.0:8000'
 keyfile= "/ssl/mysite.key"
 certfile= "/ssl/mysite.crt"
-# keyfile = "./ssl/domain.key"
-# certfile = "./ssl/domain.crt"
-# ca_certs= "./ssl/twoway.crt"
+
 # Restart workers when code changes (development only!)
-# reload = True
+reload = True
 accesslog = "/var/log/gunicorn/access.log"
 errorlog = "/var/log/gunicorn/error.log"
 loglevel = 'debug'

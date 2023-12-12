@@ -10,26 +10,16 @@ except KeyError as e:
     raise RuntimeError("Could not find a SECRET_KEY in environment") from e
 
 
-# DEBUG = bool(env('DEBUG', default=True))
-DEBUG = True
+DEBUG = bool(env('DEBUG', default=True))
+# DEBUG = True
+
 
 INSTALLED_APPS += ['debug_toolbar']
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
-ALLOWED_HOSTS = ['localhost','django.localhost','caribou-sweet-wallaby.ngrok-free.app']
 
-# ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost"])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost"])
 
 if 'POSTGRES_DB' in os.environ:
-    # DATABASES={
-    #     'default':{
-    #         'ENGINE':'django.db.backends.postgresql',
-    #         'NAME':env('POSTGRES_DB'),
-    #         'USER':env('POSTGRES_USER'),
-    #         'PASSWORD':env('POSTGRES_PASSWORD'),
-    #         'HOST':env('POSTGRES_HOST'),
-    #         'PORT':env('POSTGRES_PORT'),
-    #     }
-    # }
     DATABASES = {"default": env.db("DATABASE_URL")}
     # DATABASES = {"default": env("DATABASE_URL")}
     DATABASES["default"]["ATOMIC_REQUESTS"] = True
@@ -82,38 +72,47 @@ CORS_ALLOW_HEADERS = (
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+    # "Access-Control-Allow-Origin"
 )
 
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    "localhost",
-    "django.localhost",
-    # ...
-]
+import socket  # only if you haven't already imported this
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "localhost", "django.localhost"]
 
-CSRF_TRUSTED_ORIGINS = ['https://site.millbakers.duckdns.org','http://django.localhost', 'http://django.localhost:8001']
+# INTERNAL_IPS = [
+#     # ...
+#     "127.0.0.1",
+#     "localhost",
+#     "django.localhost",
+#     # ...
+# ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://django.localhost',
+    'https://django.localhost', 
+    'http://django.localhost:8011',
+    'http://django.localhost:8013',
+    'https://django.localhost:8011',
+    'https://django.localhost:8013'
+]
 
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8005",
-    "http://django.localhost:8001",
-    "http://localhost:8059",
-    "https://site.millbakers.duckdns.org",
-    "https://site.millbakers.duckdns.org:8005",
-    "https://site.millbakers.duckdns.org:8059",
-    "http://millbakers.duckdns.org:8001",
-    "http://127.0.0.1:8059",
+    'http://django.localhost',
+    'https://django.localhost',
+    'http://django.localhost:8011',
+    'http://django.localhost:8013',
+    'https://django.localhost:8011', 
+    'https://django.localhost:8013'
 ]
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8005",
-    "http://django.localhost:8001",
-    "http://localhost:8059",
-    "https://site.millbakers.duckdns.org",
-    "https://site.millbakers.duckdns.org:8005",
-    "https://site.millbakers.duckdns.org:8059",
-    "http://millbakers.duckdns.org:8001",
-    "http://127.0.0.1:8059",
+    'http://django.localhost',
+    'https://django.localhost',
+    'http://django.localhost:8011',
+    'http://django.localhost:8013',
+    'https://django.localhost:8011', 
+    'https://django.localhost:8013',
+    
 ]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "http")
@@ -142,9 +141,9 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 # # Email settings1
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'agripmart@gmail.com'
-EMAIL_HOST_PASSWORD = 'xsvwohyiyyszcbro'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEFAULT_FROM_EMAIL = "support@maina_wanjau.com"
@@ -155,25 +154,6 @@ ADMINS = [("""Maina Wanjau""", "maina.wanjau@gmail.com"),]
 
 MANAGERS = ADMINS
 
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "formatters": {
-#         "verbose": {
-#             "format": "%(levelname)s %(name)-12s %(asctime)s %(module)s "
-#             "%(process)d %(thread)d %(message)s"
-#         }
-#     },
-#     "handlers": {
-#         "console": {
-#             "level": "DEBUG",
-#             "class": "logging.StreamHandler",
-#             "formatter": "verbose",
-#         }
-#     },
-#     "root": {"level": "INFO", "handlers": ["console"]},
-# }
-# LOGGING
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

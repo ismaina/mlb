@@ -1,54 +1,56 @@
 from .base import *
+from .base import env
 
-env = environ.Env()
-env.read_env(env_file='.envs/.local/.django')
-
-# SECURITY WARNING: keep the secret key used in production secret!
 try:
-    SECRET_KEY = env("SECRET_KEY")
+    SECRET_KEY = env(
+    "DJANGO_SECRET_KEY",
+    default="-DMIQLNG-I9AetRVHv0HU3UAtT6hX1JL2fReDAyYSNsqPPUO5aE",
+)
 except KeyError as e:
     raise RuntimeError("Could not find a SECRET_KEY in environment") from e
 
-if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
-    }
-else:
-    DATABASES={
-        'default':{
-            'ENGINE':'django.db.backends.postgresql',
-            'NAME':env('POSTGRES_DB'),
-            'USER':env('POSTGRES_USER'),
-            'PASSWORD':env('POSTGRES_PASSWORD'),
-            'HOST':env('POSTGRES_HOST'),
-            'PORT':env('POSTGRES_PORT'),
 
-        }
-    }
+DEBUG = bool(env('DEBUG', default=False))
+# DEBUG = False
 
-DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','django.localhost','site.millbakers.duckdns.org','millbakers.duckdns.org:8001', '192.168.100.2','127.0.0.1','*.eu-west-1.elasticbeanstalk.com','*.elasticbeanstalk.com','uat-mlb-tracker-v4.eu-west-1.elasticbeanstalk.com']
 # INSTALLED_APPS += ['debug_toolbar']
 # MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost"])
+
+if 'POSTGRES_DB' in os.environ:
+    DATABASES = {"default": env.db("DATABASE_URL")}
+    # DATABASES = {"default": env("DATABASE_URL")}
+    DATABASES["default"]["ATOMIC_REQUESTS"] = True
+
+else:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
+}
+
+
+
 # Cache time to live is 15 minutes.
-CACHE_TTL = 60 * 15
+CACHE_TTL = 60 * 15     # 15 minutes caching
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 60 * 15  # 15 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'mlb'
 
+CELERY_BROKER_URL = env("CELERY_BROKER")
+CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_RESULT_BACKEND_MAX_RETRIES = 10
+CELERY_TASK_SEND_SENT_EVENT = True
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://redis:6379',
+        'LOCATION': env("CELERY_BACKEND"),
     }
 }
 #  DATABASES AND CACHES
@@ -70,39 +72,28 @@ CORS_ALLOW_HEADERS = (
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+    "Access-Control-Allow-Origin"
 )
 
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    "localhost",
-    # ...
-]
 
-CSRF_TRUSTED_ORIGINS = ['https://site.millbakers.duckdns.org','http://django.localhost', 'http://millbakers.duckdns.org:8001','https://millbakers.duckdns.org:8001', 'http://127.0.0.1:8005', 'http://127.0.0.1:8059']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://django.localhost', 
+    'https://django.localhost:8011',
+    'https://django.localhost:8013'
+]
 
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8005",
-    "http://django.localhost:8000",
-    "http://localhost:8059",
-    "https://site.millbakers.duckdns.org",
-    "https://site.millbakers.duckdns.org:8005",
-    "https://site.millbakers.duckdns.org:8059",
-    "http://millbakers.duckdns.org:8001",
-    "https://millbakers.duckdns.org:8001",
-    "http://127.0.0.1:8059",
+    'https://django.localhost',
+    'https://django.localhost:8011', 
+    'https://django.localhost:8013'
 ]
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8005",
-    "http://django.localhost:8000",
-    "http://localhost:8059",
-    "https://site.millbakers.duckdns.org",
-    "https://site.millbakers.duckdns.org:8005",
-    "https://site.millbakers.duckdns.org:8059",
-    "http://millbakers.duckdns.org:8001",
-    "https://millbakers.duckdns.org:8001",
-    "http://127.0.0.1:8059",
+    'https://django.localhost',
+    'https://django.localhost:8011', 
+    'https://django.localhost:8013',
+    
 ]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -111,8 +102,8 @@ SECURE_SSL_REDIRECT = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
-SECURE_HSTS_SECONDS = 30
+# The Security Headers website recommends a minimum value of 2,592,000, equal to 30 days.
+SECURE_HSTS_SECONDS = 2_592_000
 
 SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
 
@@ -131,18 +122,14 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 # # Email settings1
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'agripmart@gmail.com'
-EMAIL_HOST_PASSWORD = 'xsvwohyiyyszcbro'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-
-CELERY_BROKER_URL = env("CELERY_BROKER")
-CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
-CELERY_TIMEZONE = "Africa/Nairobi"
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
+DEFAULT_FROM_EMAIL = "support@maina_wanjau.com"
+DOMAIN = env("DOMAIN")
+SITE_NAME = "Mill Bakers"
 
 ADMINS = [("""Maina Wanjau""", "maina.wanjau@gmail.com"),]
 

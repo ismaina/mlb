@@ -18,9 +18,11 @@ services:
       - static_mlb_v:/app_local/staticfiles
       - media_mlb_v:/app_local/mediafiles
       - /var/log/gunicorn:/var/log/gunicorn
+      - /var/run/gunicorn:/var/run/gunicorn
       - /etc/localtime:/etc/localtime:ro
-    # ports:
-    #   - "8000:8000"
+      - /ssl/:/ssl/
+    ports:
+      - "8010:8000"
     depends_on:
       - tailwind
     expose:
@@ -86,11 +88,13 @@ services:
       - static_mlb_v:/app_local/staticfiles
       - media_mlb_v:/app_local/mediafiles
       - /etc/localtime:/etc/localtime:ro
+      - /ssl/:/ssl/
     build:
       context: ./docker/local/nginx
       dockerfile: Dockerfile
     ports:
-      - "8001:82"
+      - "8013:83"
+
     networks:
       - proxy
 

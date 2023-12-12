@@ -6,11 +6,11 @@ set -o nounset
 # python3 manage.py migrate --no-input
 python3 manage.py check
 python3 manage.py check --deploy
-python3 manage.py makemigrations users
-python3 manage.py migrate --no-input
 python3 manage.py makemigrations
 python3 manage.py migrate --no-input
+python3 manage.py createsuperuser_if_none_exists
 python3 manage.py collectstatic --no-input
+# python3 manage.py runserver 0.0.0.0:8000
 # /usr/local/bin/gunicorn --certfile=/app_local/certs/netautomate.cer --keyfile=/app_local/ssl/key/netautomate.key main_app.wsgi --workers=4 --bind 0.0.0.0:8058 --chdir=/app_local
 # /usr/local/bin/gunicorn main_app.wsgi --workers=2 --bind 0.0.0.0:8000 --chdir=/app_local
-/usr/local/bin/gunicorn -c prod-cfg.py
+/usr/local/bin/gunicorn -c local-cfg.py

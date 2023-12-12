@@ -1,6 +1,6 @@
 # ARG PYTHON_VERSION=3.10-slim-buster
-# ARG PYTHON_VERSION=python3.11-nodejs20-slim
-ARG PYTHON_VERSION=latest
+ARG PYTHON_VERSION=python3.11-nodejs21-slim
+# ARG PYTHON_VERSION=latest
 
 FROM nikolaik/python-nodejs:${PYTHON_VERSION} as python
 

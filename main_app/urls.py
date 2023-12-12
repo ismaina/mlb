@@ -26,7 +26,6 @@ urlpatterns = [
     path("products/", include("core_apps.products.urls", namespace='products')),
     path("__reload__/", include("django_browser_reload.urls")),
     path('captcha/', include('captcha.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
     path(
         "sitemap.xml",
         sitemap,
@@ -37,6 +36,7 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if bool(settings.DEBUG):
+    urlpatterns += path('__debug__/', include('debug_toolbar.urls')),
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
+import os
  
 class Command(BaseCommand):
     """
@@ -24,8 +25,8 @@ class Command(BaseCommand):
         username = "admin"
         first_name = "admin"
         last_name = "admin"
-        email = "maina.wanjau@gmail.com"
-        password = "admin@123"
+        email = os.environ.get('DJANGO_ADMIN_EMAIL')
+        password = os.environ.get('DJANGO_ADMIN_PASSWORD')
  
         user =User.objects.create_superuser(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
         user.save()
