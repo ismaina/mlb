@@ -13,6 +13,73 @@ install python requirements
 pip install -r requirements.txt
 ```
 
+### Configure Project dependencies
+The below command creates a .envs folted with 2 child sub-directories
+```shell
+mkdir -pv .envs/{.local,.production}/
+```
+```shell
+.
+└── .envs
+    ├── .local
+    └── .production
+
+```
+The preceding command creates 2 secret files to be used by django and postgres
+```shell
+touch .envs/{.local,.production}/{.django,.postgres} 
+```
+```shell
+.
+└── .envs
+    ├── .local
+    │   ├── .django
+    │   └── .postgres
+    └── .production
+        ├── .django
+        └── .postgres
+```
+
+You can generate passwords, secrets and keys that are url_safe, and change the lengths [token_urlsafe(32)]
+
+```shell
+python -c "import secrets; print(secrets.token_urlsafe(72))"
+```
+Populate the .django files with the below
+```shell
+ADMIN_URL=
+DEBUG=
+DJANGO_SECRET_KEY=
+DOMAIN=
+DJANGO_ALLOWED_HOSTS=localhost,django.localhost, #you can add extra hosts
+SIGNING_KEY=
+DJANGO_ADMIN_EMAIL=
+DJANGO_ADMIN_PASSWORD=
+
+POSTGRES_HOST=
+POSTGRES_PORT=
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+DOMAIN=
+DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+
+# if you are using Rabbitmq & Redis you can change the below
+CELERY_BROKER=amqp://admin:admin123456@rabbitmq:5672/
+CELERY_BACKEND=redis://redis:6379/0
+
+# for cloud image storage
+CLOUD_NAME=
+CLOUDINARY_API=
+CLOUDINARY_API_SECRET=
+
+RENDER_EXTERNAL_HOSTNAME=
+
+# for email notifications
+EMAIL_HOST=
+EMAIL_HOST_USER=
+EMAIL_HOST_PASSWORD=
+```
 ## Usage
 
 open to terminals
@@ -27,6 +94,7 @@ foobar.singularize('phenomena')
 
 
 install node modules
+https://platformengineer.com/fix-npm-err-code-eintegrity-verification-failed-error/
 ```shell
 # installs tailwind
 python manage.py tailwind install
